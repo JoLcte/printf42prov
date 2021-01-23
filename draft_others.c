@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 17:08:09 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/19 15:28:08 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/23 23:54:00 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,16 @@ char	*conv_parse(const char *str, va_list arg_ptr)
 
 t_flags *f_conv(const char *str)
 {
+//add '#' ' ' '+'
 	t_flags *p;
 
 	*p = {0, 0, 0, 0}
+	while (*str)
+	{
+	if (*str == '-')
+	p->fminus = 1;
+//... ou alors faire 3 fonctions (-,0),(width precision), (type)
+	}
 	if (*str == '-')
 	{
 		while (*str == '-')

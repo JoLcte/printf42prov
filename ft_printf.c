@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:56:04 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/19 16:18:36 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/23 01:23:59 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_printf(const char *str, ...)
 	if (*buff)
 		write(1, buff, len_buff);
 	write(1, "\n", 1);
-	printf("printf apres tout : |%s|\n", str);
+	//printf("printf apres tout : |%s|\n", str);
 	va_end(ap);
 	return (char_count);
 }
