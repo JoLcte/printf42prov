@@ -33,7 +33,7 @@ t_flags *f_conv(const char *str)
 //add '#' ' ' '+'
 	t_flags *p;
 
-	*p = {0, 0, 0, 0}
+	*p = {0, 0, 0, 0, 0}
 	while (*str)
 	{
 	if (*str == '-')

@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/17 16:10:45 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/24 15:54:47 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct		s_flags
 {
 int	fzero;
-int	fminus;
+int	fleft;
 int	width;
 int	prec;
 int	w_star;

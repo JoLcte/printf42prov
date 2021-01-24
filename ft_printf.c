@@ -55,7 +55,7 @@ int	ft_printf(const char *str, ...)
 		len_buff = start_parse(&str, buff);
 		char_count += len_buff;
 		if (*str == '%')
-			return 0; //char_count += ft_parse(str, ap); //ft_parse qui appelle conv ...
+			return 0; //char_count += ft_parse(&str, ap, &len_buff); //ft_parse qui appelle conv ...
 	}
 	if (*buff)
 		write(1, buff, len_buff);
