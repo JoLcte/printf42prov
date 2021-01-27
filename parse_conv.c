@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/01/25 17:09:57 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/27 17:16:05 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	flag_parse(const char **str, t_flags *f)
 {
 	int w_or_prec;
 
-	while (!(**str >= 'E' && **str <= 'x'))
+	while (1)
 	{
 		if (**str == '0' && !(f->fleft))
 		{
 			f->fzero = 1;
 			(*str)++;
 		}
-		if (**str == '-')
+		else if (**str == '-')
 		{
 			while (**str == '-')
 				(*str)++;
@@ -43,7 +43,8 @@ int	flag_parse(const char **str, t_flags *f)
 			if (f->fzero)
 				f->fzero = 0;
 		}
-
+		else
+			break;
 	}
 	w_or_prec = bonus_parse(str, f);
 	if (w_or_prec)
@@ -53,28 +54,32 @@ int	flag_parse(const char **str, t_flags *f)
 //GERER COMMENT ON FAit QUAND IL Y A DES FLAGS BONUS AU MILIEU DES PAS BONUS
 int	bonus_parse(const char **str, t_flags *f)
 {
-	if (**str == '#')
+	while (1)
 	{
-		f->prefix = 1;
-		(*str)++;
-	}
-	if (**str == '+')
-	{
-		f->fplus = 1;
-		(*str)++;
-		if (f->fspace)
-			f->fspace = 0;
-	}
-	if (**str == ' ' && !f->fplus)
-	{
-		f->fspace = 1;
-		(*str)++;
+		if (**str == '#')
+		{
+			f->prefix = 1;
+			(*str)++;
+		}
+		else if (**str == '+')
+		{
+			f->fplus = 1;
+			(*str)++;
+			if (f->fspace)
+				f->fspace = 0;
+		}
+		else if (**str == ' ' && !f->fplus)
+		{
+			f->fspace = 1;
+			(*str)++;
+		}
+		else
+			break;
 	}
 	if (**str == '*' || **str == '.' || (**str >= 1 && **str <= '9'))
 		return (1);
 	return (0);
 }
-
 
 int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 {
@@ -82,8 +87,6 @@ int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 	int w_or_prec;
 
 	*f = (t_flags){0, 0, 0, 0, 0, 0, 0, 0};
-	//pacourir char by char et remplir la struct en 3 etapes
-	//1) -,0, ' ', #
 	if (**(str + 1) && **(str + 1) == '%')
 		buff[len_buff++] = '%'; //check si ca marche ca... pas sur
 	len_buff = flush_buff(buff, len_buff);
