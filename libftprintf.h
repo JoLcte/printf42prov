@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/25 13:16:23 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/28 15:58:26 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int fspace;
 int prefix;
 int	width;
 int	prec;
-int	w_star;
 }		t_flags;
 
 int		ft_printf(const char *str, ...);

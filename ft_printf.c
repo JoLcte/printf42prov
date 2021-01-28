@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:56:04 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/25 17:08:04 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/28 16:29:15 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 int	start_parse(const char **str, char *buff)
 {
+	// estce quon met cette fonction dans parse ?
 	int len_buff;
 
 	len_buff = 0;
