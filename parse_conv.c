@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/01/28 16:29:47 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/29 00:14:25 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void width_n_prec(const char **str, t_flags *f)
 	if (**str == '*')
 	{
 		f->width = va_arg(ap, int);
-	(*str)++;
+		(*str)++;
 	}
 	if (**str >= '0' && <= '9')
 		f->witdh = ft_atoi(str);
@@ -90,10 +90,18 @@ void	flags_parse(const char **str, t_flags *f)
 
 int	padd_conv(const char **str, va_list ap, int len_buff, char *buff, t_flags *f)
 {
-	// gestion du specifier
-	// envoyer dans conv_str ou dans conv_num
-	//gestion du buffer : mettre tout une fois converti dans le buff -> gerer dans parse_conv ?
+
+if (**str == 'c' || **str == 's')
+(buff + len_buff) = conv_str(//*str, ap, len_buff? ou buff ?)*/;
+else if (**str == 'p')
+(buff +  len_buff) = conv_ptr(//);
+else if (**str == 'd' || **str == 'i' || **str == 'u' || **str == 'o' || **str == 'x' || **str == 'X')
+(buff + len_buff) = conv_num(//);
+//les conv pourraient renvoyer des int de la taille de la str a output et travailler sur *buf
+len_conv = ??
+return (len_conv ?)
 	//return int (char_count) ou return char *(buff) ?
+
 }
 
 int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
@@ -107,13 +115,12 @@ int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 	len_buff = flush_buff(buff, len_buff);
 	flag_parse(str, f);
 	//2) specifier and conv
-	buff = padd_conv ou len_buf += padd_conv ?
+	//buff = padd_conv ou len_buf += padd_conv ?
 	
-}
 
-//3) specifier type or 2+3 depending on size
-//fonction qui conv en fonction de t_flags *f et specifier, et len_buff
-//qui return le nombre de char final -> char_count+= conv_function
-//GERER LEN_BUFF pour flush;
-return (len_buff);
+		//3) specifier type or 2+3 depending on size
+		//fonction qui conv en fonction de t_flags *f et specifier, et len_buff
+		//qui return le nombre de char final -> char_count+= conv_function
+		//GERER LEN_BUFF pour flush;
+		return (len_buff);
 }
