@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/01/29 00:14:25 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/30 15:26:02 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ int	padd_conv(const char **str, va_list ap, int len_buff, char *buff, t_flags *f
 if (**str == 'c' || **str == 's')
 (buff + len_buff) = conv_str(//*str, ap, len_buff? ou buff ?)*/;
 else if (**str == 'p')
-(buff +  len_buff) = conv_ptr(//);
+(buff +  len_buff) = conv_ptr(xxx);
 else if (**str == 'd' || **str == 'i' || **str == 'u' || **str == 'o' || **str == 'x' || **str == 'X')
-(buff + len_buff) = conv_num(//);
+(buff + len_buff) = conv_num(xxx);
 //les conv pourraient renvoyer des int de la taille de la str a output et travailler sur *buf
-len_conv = ??
-return (len_conv ?)
+len_conv = xx;
+return (len_conv/*?*/);
 	//return int (char_count) ou return char *(buff) ?
 
 }
@@ -108,7 +108,7 @@ int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 {
 	t_flags *f;
 
-	*f = (t_flags){0, 0, 0, 0, 0, 0, 0};
+	*f = (t_flags){0, 0, 0, 0, 0, -1, -1};
 	if (**(str + 1) && **(str + 1) == '%')
 		buff[len_buff++] = '%'; //check si ca marche ca... pas sur
 	//1) parsing flags width prec
@@ -116,7 +116,6 @@ int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 	flag_parse(str, f);
 	//2) specifier and conv
 	//buff = padd_conv ou len_buf += padd_conv ?
-	
 
 		//3) specifier type or 2+3 depending on size
 		//fonction qui conv en fonction de t_flags *f et specifier, et len_buff

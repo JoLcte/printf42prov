@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/28 15:58:26 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/30 15:25:47 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 
 typedef struct		s_flags
 {
-int	fzero;
-int	fleft;
-int fplus;
-int fspace;
-int prefix;
-int	width;
-int	prec;
+int	fzero; // = 0
+int	fleft; // = 0
+int fplus; // = 0
+int fspace; // = 0
+int prefix; // = 0
+int	width; // = -1
+int	prec; // -1
 }		t_flags;
 
 int		ft_printf(const char *str, ...);
