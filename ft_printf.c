@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:56:04 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/31 17:00:37 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/31 23:08:30 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,20 @@ void ft_cpy(char *dst, char *src, size_t len)
 
 int	buff_pilot(char *buf, char *s, int len, int len_buff)
 {
-	const size_t rest_len = BUFSIZ - len_buff;
-	const size_t excd = len - BUFSIZ;
-	if (len <= rest_len)
+	size_t rest_len = BUFSIZ - len_buff;
+	while (len > rest_len)  // <---- revoir ou ....
 	{
-		while (len--)
-			*buff++ = *s++;
-		if (len == rest_len)
-			write(1, buff, BUFSIZ);
-	}
-	else
-	{
-		ft_cpy(buff, s, (len-excd));
+		ft_cpy(buff + len_buff, s, rest_len);
 		write(1, buff, BUFSIZ);
-		ft_cpy(buff, s + len - excd, excd);
+		len_buff = 0;
+		len -= rest_len;
+		rest_len = BUFSIZ;
 	}
-	return (new_len_buff);
+	while (len)
+		*(buff + len_buff)++ = *s++;
+	len_buff += len;
+}
+return (len_buff);
 }
 
 int	ft_printf(const char *str, ...)
@@ -61,7 +59,7 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str != '%')
 		{
-			len_buff = mainstrean                 _parse(&str, buff);
+			len_buff = mainstream_parse(&str, buff);
 			char_count += len_buff;
 		}
 		if (*str == '%') // plus tard : essayer d'effacer cette cond sans segfault
