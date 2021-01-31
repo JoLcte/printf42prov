@@ -1,15 +1,17 @@
-//#include "libftprintf.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-//int ft_printf(const char *str, ...);
 
-int main(void)
+int main(int ac, char **av)
 {
-	//if (ac == 3)
-	//{
-		return (printf("%.4+d\n", 3));
-		//return (printf(av[1]));
-	//}
+	//int a = ;
+	int res = 0;
+
+	if (ac == 3)
+	{
+		//return (printf("|%s|\n", ""));
+		res = printf(av[1], av[2]);
+	}
+	printf("%d\n", res);
 	return (0);
 }

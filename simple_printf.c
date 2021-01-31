@@ -1,15 +1,14 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
-#define BUFFER_SIZE 32
+#define BUFFER_SIZE 1024
 
 typedef struct s_conv
 {
 	int width;
 	int prec;
 	char conv;
-	int sign;
+	char *base;
 }		t_conv;
 
 size_t ft_strlen(char *str)
@@ -38,21 +37,15 @@ void	buf_write(char *buf, char c, int *buf_len)
 	{
 		write (1, buf, BUFFER_SIZE);
 		*buf_len = 0;
-		printf("\nj'ai flush\n");
 	}
 	buf[*buf_len] = c;
 	(*buf_len)++;
 }
 
-int	ft_strcat(char *buf, const char *str,int n, int *buf_len)
+void	buf_write_str(char *buf, const char *str,int n, int *buf_len)
 {
-	int i=0;
 	while (n-- && *str)
-	{
-		 buf_write(buf, *str++, buf_len);
-		i++;
-	}
-	return i;
+		buf_write(buf, *str++, buf_len);
 }
 
 void	fill_char(char *buf, char c, int len, int *buf_len)
@@ -86,21 +79,22 @@ t_conv init_conv(const char *str, char conv)
 {
 	t_conv c;
 	c.width = 0;
-	c.sign = 1;
 	c.prec = -1;
 	c.conv = conv;
 	c.width = ft_atoi(&str);
 	if (*str++ == '.')
 		c.prec = ft_atoi(&str);
 	if (c.conv == 'x')
-		c.sign = 1;
+		c.base = "0123456789abcdef";
+	else
+		c.base = "0123456789";
 	return (c);
 }
 
 int num_len(unsigned long long l, int base_len)
 {
 	int len = 0;
-	if (l == 0)
+	if (l==0)
 		len++;
 	while (l)
 	{
@@ -136,10 +130,10 @@ int format(char *buf, t_conv c, int *buf_len, va_list ap)
 		len = ft_strlen(s);
 		if (c.prec == -1)
 			c.prec = len;
-		len = min(len , c.prec);
+		len = min (len , c.prec);
 
 		fill_char(buf, ' ', c.width - len, buf_len);
-		ft_strcat(buf, (const char*)s, len, buf_len);
+		buf_write_str(buf, (const char*)s, len, buf_len);
 		len = max(c.width, len);
 		return len;
 	}
@@ -147,25 +141,21 @@ int format(char *buf, t_conv c, int *buf_len, va_list ap)
 		l = va_arg(ap, int);
 	else if (c.conv == 'x')
 		l = va_arg(ap, unsigned int);
-	if (c.sign && l < 0)
+	if (l < 0)
 	{
 		neg = 1;
 		l = -l;
-		//c.prec +=neg;
 	}
 	len = num_len(l, c.conv == 'x'? 16:10) + neg;
 	if (c.prec == 0 && l==0)
 		len = 0;
 	fill_char(buf, ' ', c.width - max(len,c.prec),buf_len);
-	if (c.prec - len > 0 && neg)
+	if (neg)
 		buf_write(buf, '-', buf_len);
 	fill_char(buf,'0', c.prec - len, buf_len);
-	if (c.prec - len <= 0 && neg)
-		buf_write(buf, '-', buf_len);
-
 	len = max (len, c.prec);
 	if (!(c.prec == 0 && l==0))
-		ltoa_base(buf, l, c.conv == 'x' ? "0123456789abcdef" : "0123456789", c.conv == 'x'? 16:10,buf_len);
+		ltoa_base(buf, l, c.base, c.conv == 'x'? 16:10,buf_len);
 	len = max(len,c.width);
 	return len;
 }
@@ -176,8 +166,8 @@ int ft_printf(const char *str, ...)
 	int buf_len = 0;
 	int final_len = 0;
 	int i = 0, j = 0;
-	va_start(ap, str);
 	char buf[BUFFER_SIZE];
+	va_start(ap, str);
 
 	while (str[i])
 	{
@@ -191,7 +181,7 @@ int ft_printf(const char *str, ...)
 			else
 			{
 				final_len += i - j + 1;
-				ft_strcat(buf, str,final_len, &buf_len);
+				buf_write_str(buf, str,final_len, &buf_len);
 			}
 		}
 		else
@@ -201,6 +191,8 @@ int ft_printf(const char *str, ...)
 		}
 		i++;
 	}
+
+
 	write(1, buf, buf_len);
 	va_end(ap);
 	return (final_len);

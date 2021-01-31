@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:56:04 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/30 14:20:39 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/01/31 17:00:37 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,31 @@
  ** DRAFT VERSION
  */
 
-//MAIN FUNCTION
 
-int	start_parse(const char **str, char *buff)
+void ft_cpy(char *dst, char *src, size_t len)
 {
-	// estce quon met cette fonction dans parse ?
-	int len_buff;
+	while (len--)
+		*dst++ = *src++;
+}
 
-	len_buff = 0;
-	while (**str && **str != '%' && len_buff < BUFSIZ)
-		buff[len_buff++] = *(*str)++;
-	buff[len_buff] = 0;
-	if (len_buff == BUFSIZ)
+int	buff_pilot(char *buf, char *s, int len, int len_buff)
+{
+	const size_t rest_len = BUFSIZ - len_buff;
+	const size_t excd = len - BUFSIZ;
+	if (len <= rest_len)
 	{
-		write(1, buff, len_buff);
-		*buff = 0;
+		while (len--)
+			*buff++ = *s++;
+		if (len == rest_len)
+			write(1, buff, BUFSIZ);
 	}
-	return (len_buff);
+	else
+	{
+		ft_cpy(buff, s, (len-excd));
+		write(1, buff, BUFSIZ);
+		ft_cpy(buff, s + len - excd, excd);
+	}
+	return (new_len_buff);
 }
 
 int	ft_printf(const char *str, ...)
@@ -53,7 +61,7 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str != '%')
 		{
-			len_buff = start_parse(&str, buff);
+			len_buff = mainstrean                 _parse(&str, buff);
 			char_count += len_buff;
 		}
 		if (*str == '%') // plus tard : essayer d'effacer cette cond sans segfault
