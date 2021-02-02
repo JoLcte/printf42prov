@@ -6,21 +6,21 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:20:39 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/01/28 16:21:35 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:27:12 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libftprintf.h"
 
-int	flush_buff(char *s, int len_buff)
+int *ft_strchr(char *s, char c)
 {
-	if (len_buff == BUFSIZ)
+	char *const save = s;
+	while (*s)
 	{
-		write (1, s, len_buff);
-		*buff = 0;
-		len_buff = 0;
+		if (*s == c)
+			return (s - save);
+		s++;
 	}
-	return (len_buff);
+	return (-1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/01/30 15:26:02 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:27:09 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,20 @@ else if (**str == 'd' || **str == 'i' || **str == 'u' || **str == 'o' || **str =
 (buff + len_buff) = conv_num(xxx);
 //les conv pourraient renvoyer des int de la taille de la str a output et travailler sur *buf
 len_conv = xx;
-return (len_conv/*?*/);
-	//return int (char_count) ou return char *(buff) ?
-
+return (len_conv);
 }
 
 int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 {
 	t_flags *f;
-
+	char *s;
+	int len; // len = ft_strlen(truc apres padding);
+	
+	s = *str;
 	*f = (t_flags){0, 0, 0, 0, 0, -1, -1};
 	if (**(str + 1) && **(str + 1) == '%')
 		buff[len_buff++] = '%'; //check si ca marche ca... pas sur
 	//1) parsing flags width prec
-	len_buff = flush_buff(buff, len_buff);
 	flag_parse(str, f);
 	//2) specifier and conv
 	//buff = padd_conv ou len_buf += padd_conv ?
@@ -121,5 +121,5 @@ int	parse_conv(const char **str, va_list ap, int len_buff, char *buff)
 		//fonction qui conv en fonction de t_flags *f et specifier, et len_buff
 		//qui return le nombre de char final -> char_count+= conv_function
 		//GERER LEN_BUFF pour flush;
-		return (len_buff);
+		return (len);
 }
