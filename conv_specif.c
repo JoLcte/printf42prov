@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   conv_specif.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 16:20:39 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/03 15:06:13 by jlecomte         ###   ########.fr       */
+/*   Created: 2021/02/03 16:17:32 by jlecomte          #+#    #+#             */
+/*   Updated: 2021/02/03 16:58:24 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libftprintf.h"
+#include "libftprintf.g"
 
-char *char_chr(char *s)
+int	str_conv(va_list ap, size_t len_buf, char *buf, t_flags *f)
 {
-	char *const save = s;
-	while (*s)
-	{
-		if (*s == '%')
-			return (s);
-		++s;
-	}
-	return (s);
+//appel a buf_pilot
 }
 
-size_t ft_strlen(char *s)
+int ptr_conv(va_list ap, size_t len_buf, char *buf, t_flags *f)
 {
-	const char * const save = s;
-	while (*s)
-		++s;
-	return (s - save);
+
+}
+
+int num_conv(va_list ap, size_t len_buf, char *buf, f_flags *f)
+{
+
 }

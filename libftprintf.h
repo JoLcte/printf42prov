@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/01/30 15:25:47 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/03 15:03:34 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #  define BUFSIZ 1024
 # endif
 
-typedef struct		s_flags
+typedef struct	s_flags
 {
 int	fzero; // = 0
 int	fleft; // = 0
@@ -30,12 +30,29 @@ int fspace; // = 0
 int prefix; // = 0
 int	width; // = -1
 int	prec; // -1
-}		t_flags;
+}				t_flags;
+
+/*
+ ** MAIN FUNCTIONS **
+ */
 
 int		ft_printf(const char *str, ...);
-//char	*ft_memcpy(char *dst, char *src, size_t n);
+size_t	buf_pilot(char *buf, char *s, size_t len, size_t len_buff);
+
+/*
+ ** CONVERT FUNCTIONS **
+ */
+
+void	flags_parse(const char **str, t_flags *f);
+void	bonus_parse(const char **str, t_flags *f);
+void	width_n_prec(const char **str, t_flags *f);
+
+/*
+ ** UTILS FONCTIONS **
+ */
+
+char	*char_chr(char *s);
 size_t	ft_strlen(char *s);
-//char	*dynq_strcat(char *dst, char *src, int len);
-//char	*len_strdup(char *dst, char *src, int len);
+void	ft_cpy(char *dst, char *src, size_t len);
 
 #endif
