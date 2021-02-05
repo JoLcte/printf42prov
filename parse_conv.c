@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/03 17:02:57 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:50:37 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,13 @@ int	padd_conv(const char **s, va_list ap, int len_buf, char *buf, t_flags *f)
 
 	s = *s;
 	if (*s == 'c' || *s == 's')
-		return (str_conv(ap, len_buf, ...));
+		return (str_conv(va_arg(ap, const char *), len_buf, buf, f));
 	else if (*s == 'p')
-		return (ptr_conv(xxx));
+		return (ptr_conv(va_arg(ap, void *), len_buf, buf, f));
 	else if (*s == 'd' || *s == 'i' || *s == 'u'
-			|| *s == 'o' || *s == 'x' || *s == 'X')
-		return (num_conv(xxx));
+		return (numsign_conv(va_arg(ap, int), len_buf, buf, f));
+	else if (*s == 'o' || *s == 'x' || *s == 'X')
+		return (numunsign_conv(va_arg(ap, unsigned int), len_buf, buf, f));
 	else
 		return (0);
 }
