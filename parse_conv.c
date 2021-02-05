@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/05 13:50:37 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/05 16:49:37 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,38 @@ void	bonus_parse(const char **s, t_flags *f)
 	}
 }
 
-void width_n_prec(const char **s, t_flags *f)
+void width_n_prec(const char **str, t_flags *f)
 {
-	if (**s == '*')
+	const char *s = str;
+	while (1)
 	{
-		f->width = va_arg(ap, int);
-		(*s)++;
-	}
-	if (**s >= '0' && <= '9')
-		f->witdh = ft_atoi(s);
-	if (**s == '.')
-	{
-		(*s)++;
-		if (**s == '*')
+		if (*s == '*')
 		{
-			f->prec = va_arg(ap, int);
-			if (f->prec < 0)
-				f->prec = -(f->prec);
+			f->width = va_arg(ap, int);
+			s++;
+		}
+		else if (*s >= '0' && <= '9')
+			f->witdh = ft_atoi(s);
+		else if (*s == '.')
+		{
+			s++;
+			if (*s == '*')
+			{
+				f->prec = va_arg(ap, int);
+				if (f->prec < 0)
+					f->prec = -(f->prec);
+			}
+			else
+				f->prec = ft_atoi(s);
 		}
 		else
-			f->prec = ft_atoi(s);
+			break;
 	}
+	*str = s;
 }
 
 void	flags_parse(const char **s, t_flags *f)
 {
-	int w_or_prec;
-
 	while (1)
 	{
 		if (**s == '0' && !(f->fleft))
@@ -98,23 +103,23 @@ int	padd_conv(const char **s, va_list ap, int len_buf, char *buf, t_flags *f)
 	else if (*s == 'p')
 		return (ptr_conv(va_arg(ap, void *), len_buf, buf, f));
 	else if (*s == 'd' || *s == 'i' || *s == 'u'
-		return (numsign_conv(va_arg(ap, int), len_buf, buf, f));
-	else if (*s == 'o' || *s == 'x' || *s == 'X')
-		return (numunsign_conv(va_arg(ap, unsigned int), len_buf, buf, f));
-	else
-		return (0);
-}
+			return (numsign_conv(va_arg(ap, int), len_buf, buf, f));
+			else if (*s == 'o' || *s == 'x' || *s == 'X')
+			return (numunsign_conv(va_arg(ap, unsigned int), len_buf, buf, f));
+			else
+			return (0);
+			}
 
-int	parse_conv(const char **str, va_list ap, int len_buf, char *buf)
-{
-	t_flags *f;
-	char *s;
-	int len;
+			int	parse_conv(const char **s, va_list ap, int len_buf, char *buf)
+			{
+			t_flags *f;
+			int len;
 
-	s = *str;
-	*f = (t_flags){0, 0, 0, 0, 0, -1, -1};
-	//SI *s = '%' on fait quoi
-	flag_parse(&s, f);
-	len = padd_conv(s, ap, len_buf, buf, f);
-	return (len);
-}
+			if (*(*s + 1) == '%')
+			truc;
+			*f = (t_flags){0, 0, 0, 0, 0, -1, -1};
+			flag_parse(s, f);
+			len = padd_conv(s, ap, len_buf, buf, f);
+			*s++; // pour ne plus etre sur le type
+			return (len);
+			}

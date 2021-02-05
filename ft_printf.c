@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:53 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/03 17:03:00 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:59:47 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	ft_printf(const char *str, ...)
 	len_buf = 0;
 	s = /*(char)*/str;
 	if (!str && !*str)
+	{
+		write(1, "(null)", 6); 
 		return (0);
+	}
 	va_start(ap, str);
 	while (*str)
 	{
@@ -70,6 +73,8 @@ int	ft_printf(const char *str, ...)
 		{
 			char_count += parse_conv(&s, ap, len_buf, buf);
 		}
+		str = s;
+	}
 	if (*buf)
 		write(1, buf, len_buf);
 	va_end(ap);
