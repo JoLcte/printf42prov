@@ -6,13 +6,13 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 13:38:50 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/07 17:08:49 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:09:54 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-char	*char_chr(char *s)
+char	*char_chr(const char *s)
 {
 	char *const save = s;
 
