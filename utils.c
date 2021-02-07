@@ -6,29 +6,30 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 16:20:39 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/03 15:06:13 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/07 16:01:32 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libftprintf.h"
 
-char *char_chr(char *s)
+void	neg_width(va_list ap, t_flags *f, const char **str)
 {
-	char *const save = s;
-	while (*s)
+	f->width = va_arg(ap, int);
+	if (f->width < 0)
 	{
-		if (*s == '%')
-			return (s);
-		++s;
+		f->width *= -1;
+		if (f->left = 1)
+			f->left = 0;
+		else
+			f->left = 1;
 	}
-	return (s);
+	(*s)++;
 }
 
-size_t ft_strlen(char *s)
+void	neg_prec(va_list ap, t_flags *f, const char **str)
 {
-	const char * const save = s;
-	while (*s)
-		++s;
-	return (s - save);
+	f->prec = va_arg(ap, int);
+	if (f->prec < 0)
+		f->prec = 0;
+	(*s)++;
 }
