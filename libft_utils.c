@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 13:38:50 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/07 16:06:39 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:08:49 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ size_t	ft_strlen(char *s)
 	return (s - save);
 }
 
-void	ft_cpy(char *dst, char *src, size_t len)
+void	ft_cpy(char *dst, const char *src, size_t len)
 {
 	while (len--)
 		*dst++ = *src++;
