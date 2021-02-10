@@ -6,14 +6,14 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/07 17:04:52 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/10 16:02:27 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libftprintf.h"
 
-static t_flags	*t_init(t_flags *f)
+void	t_init(t_flags *f)
 {
 	f->fzero = 0;
 	f->fleft = 0;
@@ -22,7 +22,6 @@ static t_flags	*t_init(t_flags *f)
 	f->prefix = 0;
 	f->width = -1;
 	f->prec = -1;
-	return (f);
 }
 
 void			bonus_parse(const char **str, t_flags *f)
@@ -96,7 +95,7 @@ void			flags_parse(const char **str, t_flags *f, va_list ap)
 size_t			parse_conv(const char **s, va_list ap, size_t len_buf,
 					char *buf)
 {
-	t_flags *f;
+	t_flags flags;
 	int		len;
 
 	if (*(*s + 1) == '%')
@@ -104,9 +103,9 @@ size_t			parse_conv(const char **s, va_list ap, size_t len_buf,
 		len_buf = buf_pilot(buf, (char *)++(*s), 1, len_buf);
 		return (1);
 	}
-	f = t_init(f);
-	flags_parse(s, f, ap);
-	len = padd_conv(s, ap, len_buf, buf, f);
+	t_init(flags);
+	flags_parse(s, &flags, ap);
+	len = padd_conv(ap, len_buf, buf, &flags);
 	++(*s);
 	return (len);
 }
