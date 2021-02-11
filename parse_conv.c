@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/10 16:02:27 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/11 17:00:17 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void			flags_parse(const char **str, t_flags *f, va_list ap)
 	width_n_prec(&s, f, ap);
 }
 
-size_t			parse_conv(const char **s, va_list ap, size_t len_buf,
+int				parse_conv(const char **s, va_list ap, size_t len_buf,
 					char *buf)
 {
 	t_flags flags;
@@ -105,7 +105,7 @@ size_t			parse_conv(const char **s, va_list ap, size_t len_buf,
 	}
 	t_init(flags);
 	flags_parse(s, &flags, ap);
-	len = padd_conv(ap, len_buf, buf, &flags);
+	len = padd_conv(ap, &len_buf, buf, &flags);
 	++(*s);
 	return (len);
 }
