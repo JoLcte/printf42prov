@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/02/07 17:12:40 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:56:35 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 
 typedef struct	s_flags
 {
-	int	fzero;
-	int	fleft;
-	int fplus;
-	int fspace;
-	int prefix;
-	int	width;
-	int	prec;
+	int		fzero;
+	int		fleft;
+	int		fplus;
+	int		fspace;
+	int		prefix;
+	size_t	width;
+	size_t	prec;
 }				t_flags;
 
 /*
@@ -54,12 +54,12 @@ size_t			parse_conv(const char **s, va_list ap, size_t len_buf,
 ** CONV FUNCTIONS
 */
 
-int				padd_conv(const char **str, va_list ap, int len_buf, char *buf,
-					t_flags *f);
-int				str_conv(const char *s, size_t len_buf, char *buf, t_flags *f);
-int				ptr_conv(void *p, size_t len_buf, char *buf, t_flags *f);
-int				numsign_conv(int num, size_t len_buf, char *buf, t_flags *f);
-int				numunsign_conv(unsigned int num, size_t len_buf, char *buf,
+int				padd_conv(const char **str, va_list ap, *size_t len_buf,
+					char *buf, t_flags *f);
+int				str_conv(const char *s, size_t *len_buf, char *buf, t_flags *f);
+int				ptr_conv(void *p, size_t *len_buf, char *buf, t_flags *f);
+int				numsign_conv(int num, size_t *len_buf, char *buf, t_flags *f);
+int				numunsign_conv(unsigned int num, size_t *len_buf, char *buf,
 					t_flags *f);
 
 /*
@@ -68,7 +68,7 @@ int				numunsign_conv(unsigned int num, size_t len_buf, char *buf,
 
 void			neg_width(va_list ap, t_flags *f, const char **str);
 void			neg_prec(va_list ap, t_flags *f, const char **str);
-
+char			*space_magic(size_t n);
 /*
 ** LIB FUNCTIONS
 */
