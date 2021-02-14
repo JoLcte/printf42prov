@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/02/11 16:56:35 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/14 14:40:11 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,17 @@ size_t			buf_pilot(char *buf, const char *s, size_t len,
 void			flags_parse(const char **str, t_flags *f, va_list ap);
 void			bonus_parse(const char **str, t_flags *f);
 void			width_n_prec(const char **str, t_flags *f, va_list ap);
-size_t			parse_conv(const char **s, va_list ap, size_t len_buf,
+int				parse_conv(const char **s, va_list ap, size_t len_buf,
 					char *buf);
 
 /*
 ** CONV FUNCTIONS
 */
 
-int				padd_conv(const char **str, va_list ap, *size_t len_buf,
+int				char_conv(int c, size_t *len_buf, char *buf, t_flags *f);
+int				padd_conv(const char **str, va_list ap, size_t *len_buf,
 					char *buf, t_flags *f);
-int				str_conv(const char *s, size_t *len_buf, char *buf, t_flags *f);
+int				str_conv(char *s, size_t *len_buf, char *buf, t_flags *f);
 int				ptr_conv(void *p, size_t *len_buf, char *buf, t_flags *f);
 int				numsign_conv(int num, size_t *len_buf, char *buf, t_flags *f);
 int				numunsign_conv(unsigned int num, size_t *len_buf, char *buf,
@@ -68,14 +69,15 @@ int				numunsign_conv(unsigned int num, size_t *len_buf, char *buf,
 
 void			neg_width(va_list ap, t_flags *f, const char **str);
 void			neg_prec(va_list ap, t_flags *f, const char **str);
-char			*space_magic(size_t n);
+char			*space_magic(char *s, size_t n);
+
 /*
 ** LIB FUNCTIONS
 */
 
-char			*char_chr(const char *s);
+const char		*char_chr(const char *s);
 size_t			ft_strlen(char *s);
 void			ft_cpy(char *dst, const char *src, size_t len);
-int				ft_atoi(const char **s);
+int				ft_atoi(const char **str);
 
 #endif
