@@ -6,40 +6,47 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:32 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/13 16:43:21 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/14 16:54:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdio.h>
 
 #include "libftprintf.h"
 
-int	str_conv(va_list ap. size_t *len_buf, char *buf, t_flags *f)
+int	char_conv(int c, size_t *len_buf, char *buf, t_flags *f)
 {
-	char *s_conv;
+	return (0);
+}
+
+int	str_conv(char *s, size_t *len_buf, char *buf, t_flags *f)
+{
 	size_t len_s;
-	char *s_width;
+	char s_width[f->width];
 	size_t l_buf;
 
-	s_conv = va_arg(ap, char *);
-	len_s = ft_strlen(s_conv);
+	len_s = ft_strlen(s);
 	l_buf = *len_buf;
 	if (f->prec > len_s)
 	{
-		s_conv[f->prec] = 0;
-		len_s = ft_strlen(s_conv);
+		s[f->prec] = 0;
+		len_s = ft_strlen(s);
+		//printf("len_s apres prec : %zu\n", len_s);
 	}
 	f->width -= len_s;
+	//printf("f->width apres soustraction: %zu\n", f->width);
 	if (f->width > 0)
 	{
-		s_width = space_magic(f->width);
+		space_magic(s_width, f->width);
+		printf("s_width: |%s|\n", s_width);
 		if (f->fleft)
 		{
-			l_buf = buf_pilot(buf, s_conv, len_s, l_buf);
+			l_buf = buf_pilot(buf, s, len_s, l_buf);
 			l_buf = buf_pilot(buf, s_width, f->width, l_buf);
 		}
 		else
 		{
 			l_buf = buf_pilot(buf, s_width, f->width, l_buf);
-			l_buf = buf_pilot(buf, s_conv, len_s, l_buf);
+			l_buf = buf_pilot(buf, s, len_s, l_buf);
 		}
 		return ((int)(len_s) + (int)f->width);
 	}
@@ -47,37 +54,43 @@ int	str_conv(va_list ap. size_t *len_buf, char *buf, t_flags *f)
 	//substitute functions inside to make it shorter
 }
 
-int ptr_conv(void *p, va_list ap, size_t *len_buf, char *buf, t_flags *f)
+int ptr_conv(void *p, size_t *len_buf, char *buf, t_flags *f)
 {
 	//ajouter 0x ?
 	// faire des tests sur un char * par exemple
 	// ou un *int
+	return (0);
 }
 
 int numsign_conv(int num, size_t *len_buf, char *buf, t_flags *f)
 {
 
+	return (0);
 }
 
 int numunsign_conv(unsigned int num, size_t *len_buf, char *buf, t_flags *f)
 {
 
+	return (0);
 }
 
-int	padd_conv(const char **str, va_list ap, *size_t len_buf, char *buf, t_flags *f)
+int	padd_conv(const char **str, va_list ap, size_t *len_buf, char *buf, t_flags *f)
 {
 	const char *s = *str;
 
+	//printf("on est dans padd_conv\n");
+	//printf("*s = |%c|\n", *s);
+
 	if (*s == 'c')
-		return (char_conv(va_arg(ap, const char), &len_buf, buf, f));
-	else if(*s == 's')
-		return (str_conv(va_arg(ap, const char *), &len_buf, buf, f));
+		return (char_conv(va_arg(ap, int), len_buf, buf, f)); // a regler
+	else if (*s == 's')
+		return (str_conv(va_arg(ap, char *), len_buf, buf, f));
 	else if (*s == 'p')
-		return (ptr_conv(va_arg(ap, void *), &len_buf, buf, f));
+		return (ptr_conv(va_arg(ap, void *), len_buf, buf, f));
 	else if (*s == 'd' || *s == 'i' || *s == 'u')
-		return (numsign_conv(va_arg(ap, int), &len_buf, buf, f));
+		return (numsign_conv(va_arg(ap, int), len_buf, buf, f));
 	else if (*s == 'o' || *s == 'x' || *s == 'X')
-		return (numunsign_conv(va_arg(ap, unsigned int), &len_buf, buf, f));
+		return (numunsign_conv(va_arg(ap, unsigned int), len_buf, buf, f));
 	else
 		return (0);
 }
