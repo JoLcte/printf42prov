@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/14 16:36:47 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/18 18:38:26 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -14,22 +14,9 @@
 #include <unistd.h>
 #include "libftprintf.h"
 
-void	t_init(t_flags *f)
-{
-	f->fzero = 0;
-	f->fleft = 0;
-	f->fplus = 0;
-	f->fspace = 0;
-	f->prefix = 0;
-	f->width = -1;
-	f->prec = -1;
-	//printf("on a init f\n");
-}
-
 void			bonus_parse(const char **str, t_flags *f)
 {
 	const char *s = *str;
-//printf("on est dans bonus_parse\n");
 	while (1)
 	{
 		if (*s == '#')
@@ -51,17 +38,11 @@ void			bonus_parse(const char **str, t_flags *f)
 void			width_n_prec(const char **str, t_flags *f, va_list ap)
 {
 	const char *s = *str;
-	//printf("on est dans width_n_prec\n");
-	//printf("*s avant width: %s\n", s);
 
 	if (*s == '*')
 		neg_width(ap, f, &s);
 	if (*s >= '0' && *s <= '9')
-	{
-		printf("il a reconnu un chiffre\n");
 		f->width = ft_atoi(&s);
-		//printf("width: %d\n", f->width);
-	}
 	if (*s == '.')
 	{
 		++s;
@@ -79,50 +60,54 @@ void			width_n_prec(const char **str, t_flags *f, va_list ap)
 void			flags_parse(const char **str, t_flags *f, va_list ap)
 {
 	const char *s = *str;
-//printf("on est dans flags_parse\n");
 	while (1)
 	{
-		//printf("on a boucle\n");
 		if (*s == '0' && !(f->fleft))
 			f->fzero = 1;
 		else if (*s == '-')
 		{
-			//printf("on a bien detect le -\n");
 			f->fleft = 1;
 			if (f->fzero)
 				f->fzero = 0;
 		}
 		else
-		{
-			//printf("on abreak\n");
 			break ;
-		}
 		++s;
-		//printf("dans la boucle flag: %s\n", s);
 	}
 	bonus_parse(&s, f);
 	width_n_prec(&s, f, ap);
 	*str = s;
-	//printf("fleft = %d\n", f->fleft);
 }
 
-int				parse_conv(const char **s, va_list ap, size_t len_buf,
-					char *buf)
+void specif_parse(const char **str, t_flags *f)
 {
-	t_flags flags;
-	int		len;
+	char c;
 
-	//printf("on est dans parse_conv\n");
+	c = **str;
+	if (c == 'c' || c == 'd' || c == 'i' || c == 'o' || c == 'p'|| c == 's'
+			|| c == 'u' || c == 'x' || c == 'X')
+		f->spec = c;
+}
+
+int				parse_conv(const char **s, va_list ap, char *buf)
+{
+	t_flags f;
+	const char *save;
+
+	save = *s; 
 	if (**s == '%')
 	{
-		//printf("deuxieme pour cent\n");
-		len_buf = buf_pilot(buf, (char *)(*s), 1, len_buf);
-		return (1);
+		buf_pilot(buf, *s, 1);
+		return (1);                              
 	}
-	t_init(&flags);
-	flags_parse(s, &flags, ap);
-	//printf("*s avant padd_conv: |%s|\n", *s);
-	len = padd_conv(s, ap, &len_buf, buf, &flags);
+	t_init(&f);
+	flags_parse(s, &f, ap);
+	specif_parse(s, &f);
 	++(*s);
-	return (len);
+	if (f.spec == 'c' || f.spec == 's')
+		return (conv_str(ap, buf, &f));
+	else if (f.spec == 'p' || f.spec == 'u' || f.spec == 'o' || f.spec == 'X'
+		|| f.spec == 'd' || f.spec == 'i')
+		return (conv_num(ap, buf, &f));
+	return (*s - save);
 }
