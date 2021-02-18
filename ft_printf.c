@@ -6,19 +6,19 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:53 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/14 16:49:54 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/18 18:31:38 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 
 #include "libftprintf.h"
 
-size_t	buf_pilot(char *buf, const char *s, size_t len, size_t len_buf)
+void	buf_pilot(char *buf, const char *s, size_t len)
 {
+	static size_t len_buf;
 	size_t	rest_len;
 
 	rest_len = BUFSIZ - len_buf;
-	printf("\nceci est mon buf: |%s|\n", buf);
 	while (len > rest_len)
 	{
 		ft_cpy(buf + len_buf, s, rest_len);
@@ -32,20 +32,18 @@ size_t	buf_pilot(char *buf, const char *s, size_t len, size_t len_buf)
 		ft_cpy(buf + len_buf, s, len);
 	len_buf += len;
 	buf[len_buf] = 0;
-	return (len_buf);
 }
 
-int		ft_printf(const char *str, ...)
+	int		ft_printf(const char *str, ...)
 {
-	char		buf[BUFSIZ];
+	char		buf[BUFSIZ + 1];
 	int			char_count;
 	const char	*s;
-	size_t		len_buf;
 	va_list		ap;
 
 	char_count = 0;
-	len_buf = 0;
 	s = str;
+	buf[BUFSIZ] = 0;
 	if (!str && !*str)
 	{
 		write(1, "(null)", 6);
@@ -54,24 +52,18 @@ int		ft_printf(const char *str, ...)
 	va_start(ap, str);
 	while (*str)
 	{
-		// till '%'
 		s = char_chr(str);
 		char_count += s - str;
-		len_buf = buf_pilot(buf, str, char_count, len_buf);
-
-		//from '%' : conv
-		if (*s) // comme ca si *s = 0 on ne rentre pas dedans
+		buf_pilot(buf, str, s - str);
+		if (*s)
 		{
 			s++;
-			//printf("\n*s avant parse: %s\n", s);
-			char_count += parse_conv(&s, ap, len_buf, buf);
+			char_count += parse_conv(&s, ap, buf);
 		}
 		str = s;
-		printf("char_count = %d\n", char_count);
 	}
 	if (*buf)
-		printf("le buf de la fin : %s\n", buf);
-		write(1, buf, len_buf);
+		write(1, buf, ft_strlen(buf));
 	va_end(ap);
 	return (char_count);
 }
