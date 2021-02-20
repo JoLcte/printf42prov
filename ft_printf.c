@@ -6,17 +6,18 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:53 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/18 18:31:38 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:06:21 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <stdio.h>
 
 #include "libftprintf.h"
 
-void	buf_pilot(char *buf, const char *s, size_t len)
+size_t	buf_pilot(char *buf, const char *s, size_t len)
 {
-	static size_t len_buf;
-	size_t	rest_len;
+	static size_t	len_buf;
+	size_t			rest_len;
 
 	rest_len = BUFSIZ - len_buf;
 	while (len > rest_len)
@@ -31,10 +32,10 @@ void	buf_pilot(char *buf, const char *s, size_t len)
 	if (len)
 		ft_cpy(buf + len_buf, s, len);
 	len_buf += len;
-	buf[len_buf] = 0;
+	return (len_buf);
 }
 
-	int		ft_printf(const char *str, ...)
+int		ft_printf(const char *str, ...)
 {
 	char		buf[BUFSIZ + 1];
 	int			char_count;
@@ -43,12 +44,6 @@ void	buf_pilot(char *buf, const char *s, size_t len)
 
 	char_count = 0;
 	s = str;
-	buf[BUFSIZ] = 0;
-	if (!str && !*str)
-	{
-		write(1, "(null)", 6);
-		return (0);
-	}
 	va_start(ap, str);
 	while (*str)
 	{
@@ -63,7 +58,7 @@ void	buf_pilot(char *buf, const char *s, size_t len)
 		str = s;
 	}
 	if (*buf)
-		write(1, buf, ft_strlen(buf));
+		write(1, buf, buf_pilot(buf, "", 0));
 	va_end(ap);
 	return (char_count);
 }
