@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 09:46:41 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 10:47:25 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 17:09:37 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,48 @@
 
 #include "libftprintf.h"
 
-void	neg_width(va_list ap, t_flags *f, const char **s)
+void	neg_width(int width, t_flags *f, const char **s)
 {
-	f->width = va_arg(ap, size_t);
-	if (f->width < 0)
+	if (width < 0)
 	{
-		f->width *= -1;
-		if (f->fleft == 1)
-			f->fleft = 0;
-		else
-			f->fleft = 1;
+		f->width = -width;
+		f->fleft = 1;
 	}
+	else
+		f->width = width;
 	++(*s);
 }
 
-void	neg_prec(va_list ap, t_flags *f, const char **s)
+void	neg_star_prec(int prec, t_flags *f)
 {
-	f->prec = va_arg(ap, size_t);
-	if (f->prec < 0)
-		f->prec *= -1;
-	++(*s);
+	if (prec < 0)
+	{
+		if (f->width == -1)
+		{
+			f->fleft = 1;
+			f->width = -prec;
+		}
+		f->prec = -1;
+	}
+	else
+	{
+		f->prec = prec;
+		f->fzero = 0;
+	}
+}
+void	neg_prec(int prec, t_flags *f)
+{
+	if (prec < 0)
+	{
+		f->fleft = 1;
+		f->width = -prec;
+		f->prec = 0;
+	}
+	else
+	{
+		f->prec = prec;
+		f->fzero = 0;
+	}
 }
 
 char	*space_magic(char *s, size_t n)
@@ -54,7 +76,7 @@ size_t	prec_str(char *s, int prec)
 	size_t len;
 
 	len = ft_strlen(s);
-	if (prec < (int)len)
+	if (prec < (int)len && prec > -1)
 	{
 		s[prec] = 0;
 		return (prec);

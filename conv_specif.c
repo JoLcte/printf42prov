@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:32 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 13:59:08 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 17:11:20 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -22,7 +22,7 @@ int	str_conv(char *s, size_t len_s, char *buf)
 int	str_conv_width(char *s, size_t len_s, char *buf, t_flags *f)
 {
 	const char s_width[f->width + 1];
-
+printf("onest bien la\n");
 	f->width -= (int)len_s;
 	if (f->width > 0)
 	{

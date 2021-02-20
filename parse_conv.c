@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 14:21:57 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 16:53:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ void	width_n_prec(const char **str, t_flags *f, va_list ap)
 	const char *s = *str;
 
 	if (*s == '*')
-		neg_width(ap, f, &s);
+		neg_width(va_arg(ap, int), f, &s);
 	if (*s >= '0' && *s <= '9')
 		f->width = ft_atoi(&s);
 	if (*s == '.')
 	{
 		++s;
 		if (*s == '*')
-			neg_prec(ap, f, &s);
-		else
 		{
-			f->prec = ft_atoi(&s);
-			f->fzero = 0;
+			neg_star_prec(va_arg(ap, int), f);
+			++s;
 		}
+		else
+			neg_prec(ft_atoi(&s), f);
 	}
 	*str = s;
 }

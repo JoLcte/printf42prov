@@ -6,7 +6,7 @@
 /*   By: JoLecomte <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:35:00 by JoLecomte         #+#    #+#             */
-/*   Updated: 2021/02/20 10:41:22 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 17:12:31 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int				parse_conv(const char **s, va_list ap, char *buf);
 */
 
 int				conv_str(va_list ap, char *buf, t_flags *f);
+int				conv_char(va_list ap, char *buf, t_flags *f);
 int				conv_num(va_list ap, char *buf, t_flags *f);
 int				str_conv_width(char *s, size_t len_s, char *buf, t_flags *f);
 int				str_conv(char *s, size_t len_s, char *buf);
@@ -68,8 +69,9 @@ int				numunsign_conv(unsigned int num, char *buf,
 */
 
 void			t_init(t_flags *f);
-void			neg_width(va_list ap, t_flags *f, const char **str);
-void			neg_prec(va_list ap, t_flags *f, const char **str);
+void			neg_width(int width, t_flags *f, const char **str);
+void			neg_star_prec(int prec, t_flags *f);
+void			neg_prec(int prec, t_flags *f);
 char			*space_magic(char *s, size_t n);
 size_t			prec_str(char *s, int prec);
 
