@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:32 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/18 18:39:36 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:13:58 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -22,6 +22,7 @@ int	str_conv(char *s, size_t len_s, char *buf, t_flags *f)
 int	str_conv_width(char *s, size_t len_s, char *buf, t_flags *f)
 {
 	const char s_width[f->width + 1];
+
 	if (f->width > (int)len_s)
 	{
 		f->width -= (int)len_s;
@@ -66,24 +67,30 @@ int numunsign_conv(unsigned int num, char *buf, t_flags *f)
 	return (0);
 }
 
-int	conv_str(va_list ap, char *buf, t_flags *f)
+int	conv_char(va_list ap, char *buf, t_flags *f)
 {
 	char	c[2];
-	char	*s;
-	size_t	len_s;
-	c[1] = 0;
 
-	if (f->spec == 'c')
-	{
-		*c = (unsigned char)va_arg(ap, int);
-		if (f->width > 0)
-			return (str_conv_width(c, 1, buf, f));
-		return (str_conv(c, 1, buf, f));
-	}
+	c[1] = 0;
+	*c = (unsigned char)va_arg(ap, int);
+	if (f->width > 0)
+		return (str_conv_width(c, 1, buf, f));
+	return (str_conv(c, 1, buf, f));
+}
+
+int	conv_str(va_list ap, char *buf, t_flags *f)
+{
+	size_t	len_s;
+	char	*s;
+	char	nul_str[7];
+
+	nul_str = "(null)";
 	s = va_arg(ap, char *);
+	if (!s)
+		return (str_conv(nul_str, prec_str(nul_str, f->prec), buf, f));
 	len_s = prec_str(s, f->prec);
 	if (f->spec == 's' && f->width > len_s && f->width > 0)
-		return(str_conv_width(s, len_s, buf, f));
+		return (str_conv_width(s, len_s, buf, f));
 	else if (f->spec == 's')
 		return (str_conv(s, len_s, buf, f));
 	return (0);
@@ -91,7 +98,6 @@ int	conv_str(va_list ap, char *buf, t_flags *f)
 
 int	conv_num(va_list ap, char *buf, t_flags *f)
 {
-
 	if (f->spec == 'p')
 		return (ptr_conv(va_arg(ap, void *), buf, f));
 	else if (f->spec == 'd' || f->spec == 'i' || f->spec == 'u')
