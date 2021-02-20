@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 09:46:41 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 10:35:11 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:47:25 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t	prec_str(char *s, int prec)
 	size_t len;
 
 	len = ft_strlen(s);
-	if (prec < len)
+	if (prec < (int)len)
 	{
 		s[prec] = 0;
 		return (prec);
