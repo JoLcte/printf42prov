@@ -6,14 +6,14 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:32 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 10:13:58 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:49:35 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 
 #include "libftprintf.h"
 
-int	str_conv(char *s, size_t len_s, char *buf, t_flags *f)
+int	str_conv(char *s, size_t len_s, char *buf)
 {
 	buf_pilot(buf, s, len_s);
 	return (len_s);
@@ -75,24 +75,26 @@ int	conv_char(va_list ap, char *buf, t_flags *f)
 	*c = (unsigned char)va_arg(ap, int);
 	if (f->width > 0)
 		return (str_conv_width(c, 1, buf, f));
-	return (str_conv(c, 1, buf, f));
+	return (str_conv(c, 1, buf));
 }
 
 int	conv_str(va_list ap, char *buf, t_flags *f)
 {
-	size_t	len_s;
-	char	*s;
-	char	nul_str[7];
+	size_t		len_s;
+	char		*s;
+	const char	nul_str[] = "(null)";
 
-	nul_str = "(null)";
 	s = va_arg(ap, char *);
 	if (!s)
-		return (str_conv(nul_str, prec_str(nul_str, f->prec), buf, f));
+	{
+		len_s = prec_str((char *)nul_str, f->prec);
+		return (str_conv((char *)nul_str, len_s, buf));
+	}
 	len_s = prec_str(s, f->prec);
-	if (f->spec == 's' && f->width > len_s && f->width > 0)
+	if (f->spec == 's' && f->width > (int)len_s && f->width > 0)
 		return (str_conv_width(s, len_s, buf, f));
 	else if (f->spec == 's')
-		return (str_conv(s, len_s, buf, f));
+		return (str_conv(s, len_s, buf));
 	return (0);
 }
 
