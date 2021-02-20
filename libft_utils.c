@@ -6,9 +6,10 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 13:38:50 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/14 15:17:23 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:34:23 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <stdio.h>
 
 #include "libftprintf.h"
@@ -39,10 +40,9 @@ void		ft_cpy(char *dst, const char *src, size_t len)
 		*dst++ = *src++;
 }
 
-int		ft_atoi(const char **str)
+int			ft_atoi(const char **str)
 {
-	const char *s = *str;
-
+	const char	*s = *str;
 	long int	res;
 	int			neg;
 
