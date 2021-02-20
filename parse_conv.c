@@ -6,17 +6,19 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/18 18:38:26 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:32:31 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <stdio.h>
 
 #include <unistd.h>
 #include "libftprintf.h"
 
-void			bonus_parse(const char **str, t_flags *f)
+void	bonus_parse(const char **str, t_flags *f)
 {
 	const char *s = *str;
+
 	while (1)
 	{
 		if (*s == '#')
@@ -35,7 +37,7 @@ void			bonus_parse(const char **str, t_flags *f)
 	}
 }
 
-void			width_n_prec(const char **str, t_flags *f, va_list ap)
+void	width_n_prec(const char **str, t_flags *f, va_list ap)
 {
 	const char *s = *str;
 
@@ -57,9 +59,10 @@ void			width_n_prec(const char **str, t_flags *f, va_list ap)
 	*str = s;
 }
 
-void			flags_parse(const char **str, t_flags *f, va_list ap)
+void	flags_parse(const char **str, t_flags *f, va_list ap)
 {
 	const char *s = *str;
+
 	while (1)
 	{
 		if (*s == '0' && !(f->fleft))
@@ -79,26 +82,26 @@ void			flags_parse(const char **str, t_flags *f, va_list ap)
 	*str = s;
 }
 
-void specif_parse(const char **str, t_flags *f)
+void	specif_parse(const char **str, t_flags *f)
 {
 	char c;
 
 	c = **str;
-	if (c == 'c' || c == 'd' || c == 'i' || c == 'o' || c == 'p'|| c == 's'
-			|| c == 'u' || c == 'x' || c == 'X')
+	if (c == 'c' || c == 'd' || c == 'i' || c == 'o' || c == 'p' || c == 's'
+		|| c == 'u' || c == 'x' || c == 'X')
 		f->spec = c;
 }
 
-int				parse_conv(const char **s, va_list ap, char *buf)
+int		parse_conv(const char **s, va_list ap, char *buf)
 {
-	t_flags f;
-	const char *save;
+	t_flags		f;
+	const char	*save;
 
-	save = *s; 
+	save = *s;
 	if (**s == '%')
 	{
 		buf_pilot(buf, *s, 1);
-		return (1);                              
+		return (1);
 	}
 	t_init(&f);
 	flags_parse(s, &f, ap);
