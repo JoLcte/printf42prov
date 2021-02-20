@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 16:17:32 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 10:49:35 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:59:08 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -16,35 +16,30 @@
 int	str_conv(char *s, size_t len_s, char *buf)
 {
 	buf_pilot(buf, s, len_s);
-	return (len_s);
+	return ((int)len_s);
 }
 
 int	str_conv_width(char *s, size_t len_s, char *buf, t_flags *f)
 {
 	const char s_width[f->width + 1];
 
-	if (f->width > (int)len_s)
+	f->width -= (int)len_s;
+	if (f->width > 0)
 	{
-		f->width -= (int)len_s;
-		if (f->width > 0)
+		space_magic((char *)s_width, f->width);
+		if (f->fleft)
 		{
-			space_magic((char *)s_width, f->width);
-			if (f->fleft)
-			{
-				buf_pilot(buf, s, len_s);
-				buf_pilot(buf, s_width, f->width);
-			}
-			else
-			{
-				buf_pilot(buf, s_width, f->width);
-				buf_pilot(buf, s, len_s);
-			}
-			return ((int)(len_s) + f->width);
+			buf_pilot(buf, s, len_s);
+			buf_pilot(buf, s_width, f->width);
 		}
-		return (f->width);
+		else
+		{
+			buf_pilot(buf, s_width, f->width);
+			buf_pilot(buf, s, len_s);
+		}
+		return ((int)(len_s) + f->width);
 	}
-	buf_pilot(buf, s, len_s);
-	return ((int)len_s);
+	return (f->width);
 }
 
 int ptr_conv(void *p, char *buf, t_flags *f)
@@ -73,7 +68,7 @@ int	conv_char(va_list ap, char *buf, t_flags *f)
 
 	c[1] = 0;
 	*c = (unsigned char)va_arg(ap, int);
-	if (f->width > 0)
+	if (f->width > 1)
 		return (str_conv_width(c, 1, buf, f));
 	return (str_conv(c, 1, buf));
 }
@@ -88,14 +83,14 @@ int	conv_str(va_list ap, char *buf, t_flags *f)
 	if (!s)
 	{
 		len_s = prec_str((char *)nul_str, f->prec);
+		if (f->width > (int)len_s)
+			return (str_conv_width((char *)nul_str, len_s, buf, f));
 		return (str_conv((char *)nul_str, len_s, buf));
 	}
 	len_s = prec_str(s, f->prec);
-	if (f->spec == 's' && f->width > (int)len_s && f->width > 0)
+	if (f->width > (int)len_s)
 		return (str_conv_width(s, len_s, buf, f));
-	else if (f->spec == 's')
-		return (str_conv(s, len_s, buf));
-	return (0);
+	return (str_conv(s, len_s, buf));
 }
 
 int	conv_num(va_list ap, char *buf, t_flags *f)
