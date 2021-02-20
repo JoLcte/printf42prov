@@ -6,7 +6,7 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:30:02 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/02/20 14:02:28 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:21:57 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ int		parse_conv(const char **s, va_list ap, char *buf)
 	flags_parse(s, &f, ap);
 	specif_parse(s, &f);
 	++(*s);
-	if (f.spec == 'c' || f.spec == 's')
+	if (f.spec == 'c')
+		return (conv_char(ap, buf, &f));
+	if (f.spec == 's')
 		return (conv_str(ap, buf, &f));
 	else if (f.spec == 'p' || f.spec == 'u' || f.spec == 'o' || f.spec == 'X'
 		|| f.spec == 'd' || f.spec == 'i')
