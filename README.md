@@ -14,10 +14,7 @@ Used testers in additions of my own ones : 42TESTERS-PRINTF (Mazoise) - pft (gal
 
                                          Thank you to them ＼(´∀｀ )／
 
-
-
-
       \    /\
        )  ( ')
       (  /  )
-       \(__)|    *(jgs)*
+       \(__)|  jgs
