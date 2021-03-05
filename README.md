@@ -1,6 +1,6 @@
 # printf42prov
 
---- My own version of ft_printf ---
+                                  --- My own version of ft_printf ---
 
 I wanted to follow the idea of having a buffer if size BUSIZ often defined in the system (used indeed in stevbuf)
 
