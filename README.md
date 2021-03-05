@@ -2,7 +2,7 @@
 
                                     --- My own version of ft_printf ---
 
-I wanted to follow the idea of having a buffer if size BUSIZ often defined in the system (used indeed in stevbuf)
+I wanted to follow the idea of having a buffer of size BUSIZ often defined in the system (used indeed in stevbuf)
 
 That was quite a challenge but I've learned a lot about memory use, system optimizations and the different sizes we can use.
 
