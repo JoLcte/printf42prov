@@ -1,6 +1,6 @@
 # printf42prov
 
-                                  --- My own version of ft_printf ---
+                                                          --- My own version of ft_printf ---
 
 I wanted to follow the idea of having a buffer if size BUSIZ often defined in the system (used indeed in stevbuf)
 
@@ -11,4 +11,5 @@ It's really far from perfect, and the code is hard to understand (and for now I 
 In the end, I'd recommand this project to no one, every one goes crazy on it, me included.
 
 Used testers in additions of my own ones : 42TESTERS-PRINTF (Mazoise) - pft (galvinfielder) - PFT or pft_2019 (cclaude42) - PrintfTester (Tripouille)
-Thank you to them ＼(´∀｀ )／
+
+                                                              Thank you to them ＼(´∀｀ )／
