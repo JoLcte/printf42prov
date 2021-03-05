@@ -13,3 +13,11 @@ In the end, I'd recommand this project to no one, every one goes crazy on it, me
 Used testers in additions of my own ones : 42TESTERS-PRINTF (Mazoise) - pft (galvinfielder) - pft_2019 (cclaude42) - PrintfTester (Tripouille)
 
                                          Thank you to them ＼(´∀｀ )／
+
+
+
+
+      \    /\
+       )  ( ')
+      (  /  )
+       \(__)|    *(jgs)*
