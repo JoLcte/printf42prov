@@ -10,6 +10,6 @@ It's really far from perfect, and the code is hard to understand (and for now I 
 
 In the end, I'd recommand this project to no one, every one goes crazy on it, me included.
 
-Used testers in additions of my own ones : 42TESTERS-PRINTF (Mazoise) - pft (galvinfielder) - PFT or pft_2019 (cclaude42) - PrintfTester (Tripouille)
+Used testers in additions of my own ones : 42TESTERS-PRINTF (Mazoise) - pft (galvinfielder) - pft_2019 (cclaude42) - PrintfTester (Tripouille)
 
                                          Thank you to them ＼(´∀｀ )／
