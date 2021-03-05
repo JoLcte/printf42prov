@@ -6,14 +6,12 @@
 /*   By: jlecomte <jlecomte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 00:02:22 by jlecomte          #+#    #+#             */
-/*   Updated: 2021/03/05 19:29:37 by jlecomte         ###   ########.fr       */
+/*   Updated: 2021/03/05 22:54:23 by jlecomte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-
-# include <stdio.h>
 
 # include <stdarg.h>
 # include <stdlib.h>
