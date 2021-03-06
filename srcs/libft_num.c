@@ -100,7 +100,7 @@ void		ultoa_base(char *buf, unsigned long n, t_flags *f)
 	l_base = fill_base(str_base, f->spec);
 	if (n == 0)
 	{
-		if (f->prec || f->spec == 'p')
+		if (f->prec)
 			buf_pilot(buf, "0", 1, 0);
 	}
 	while (n)
